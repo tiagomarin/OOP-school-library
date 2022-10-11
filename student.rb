@@ -12,7 +12,3 @@ class Student < Person
     "¯\(ツ)/¯"
   end
 end
-
-student = Student.new('ruby class', 14, 'tiago')
-puts student.name
-puts student.parent_permission

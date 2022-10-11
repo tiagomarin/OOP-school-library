@@ -1,6 +1,6 @@
 require 'securerandom'
-
-class Person
+require_relative './nameable'
+class Person < Nameable
   attr_accessor :name, :age
   attr_reader :id
 
@@ -8,11 +8,15 @@ class Person
     @id = SecureRandom.uuid
     @name = name
     @age = age
-    @parent_permission = parent_permission
+    @parent_permission = (!parent_permission.nil?)
   end
 
-  def can_use_services?(parent_permission)
-    of_age || parent_permission ? true : false
+  def correct_name
+    @name
+  end
+
+  def can_use_services?
+    of_age || @parent_permission
   end
 
   private
@@ -24,3 +28,4 @@ end
 
 person = Person.new(12, 'John', parent_permission: false)
 puts person.name
+pp person

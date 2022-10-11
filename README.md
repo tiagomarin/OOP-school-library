@@ -26,7 +26,7 @@ To run this project follow these simple steps:
 - Any code editor like Vscode or Vim.
 
 
-## Authors
+## Author
 
 👤 **Tiago Lelinski**
 

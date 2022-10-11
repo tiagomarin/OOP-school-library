@@ -24,3 +24,11 @@ end
 
 person = Person.new(12, 'John', parent_permission: false)
 puts person.name
+
+student = Student.new(22, 'Tiago', 'Microverse stars', parent_permission: false)
+puts student.name
+puts student.classroom
+
+teacher = Teacher.new(22, 'Vanessa', 'Ruby')
+puts teacher.name
+puts teacher.specialization

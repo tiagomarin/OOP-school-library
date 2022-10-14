@@ -16,8 +16,8 @@ class Person < Nameable
     @parent_permission = !parent_permission.nil?
   end
 
-  def add_rental(book)
-    Rental.new(book, self)
+  def add_rental(book, date)
+    Rental.new(book: book, person: self, date: date)
   end
 
   def can_use_services?

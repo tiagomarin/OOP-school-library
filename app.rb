@@ -2,7 +2,6 @@ require_relative './classroom'
 require_relative './book'
 require_relative './student'
 require_relative './teacher'
-
 require_relative './rental'
 
 class App
@@ -29,7 +28,7 @@ class App
     teachers = []
     teachers_names = %w[John Ana Kevin]
     teachers_names.each do |name|
-      teachers.push(Teacher.new(age: 22, name: name, specialization: 'Ruby'))
+      teachers.push(Teacher.new(age: 22, name: name, specialization: 'Ruby', parent_permission: true))
     end
 
     # start
@@ -100,6 +99,7 @@ class App
   end
 
   def add_person
+    system 'clear'
     puts 'To add a student, please enter 1'
     puts 'To add a teacher, please enter 2'
     user_input = gets.chomp.to_i
@@ -175,7 +175,11 @@ class App
     end
   end
 
-  def add_book; end
+  def add_book
+    puts 'What is the title of the book?'
+    title = gets.chomp.to_s
+    puts 'To add a teacher, please enter 2'
+  end
 
   def add_rental; end
 

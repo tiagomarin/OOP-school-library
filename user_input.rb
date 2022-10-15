@@ -12,9 +12,10 @@ class UserInput
     if answer > classrooms.length || answer <= 0
       puts 'Error! To add a student you must provide a valid Classroom. Please select one number from the list.'
       sleep 0.75
-      classroom
+      classroom(classrooms)
+    else
+      answer - 1
     end
-    answer - 1
   end
 
   def self.parent_permission
@@ -41,7 +42,7 @@ class UserInput
     if answer > specializations.length || answer <= 0
       puts 'Error! To add a teacher you MUST provide a valid Specialization. Please select one number from the list.'
       sleep 0.75
-      specialization
+      specialization(specializations)
     end
     answer
   end
@@ -72,7 +73,8 @@ class UserInput
     if answer > people.length || answer <= 0
       puts 'Error! You must select a valid person. Please select one NUMBER from the list.'
       person_rental(people)
+    else
+      people[answer - 1]
     end
-    people[answer - 1]
   end
 end

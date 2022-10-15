@@ -48,43 +48,37 @@ class App
     puts "\nEnter a number from the options below:"
     puts options
     choice = gets.chomp.to_i
-    puts "\nyour option: #{choice}"
+    select_action(choice)
+    system 'clear'
+  end
 
+  def select_action(choice)
     case choice
     when 1
-      system 'clear'
       add_person
       promt_start_input
     when 2
-      system 'clear'
       Book.add_book(@books)
       promt_start_input
     when 3
-      system 'clear'
       Rental.add_rental(@books, @people, @rentals)
       promt_start_input
     when 4
-      system 'clear'
       Person.list_all_people(@people)
       promt_start_input
     when 5
-      system 'clear'
       Book.list_all(@books)
       promt_start_input
     when 6
-      system 'clear'
       Rental.list_all(@rentals)
       promt_start_input
     when 7
-      system 'clear'
       Rental.list_all_rentals_by_person_id(@people)
       promt_start_input
     when 8
-      system 'clear'
       Student.list_all(@people)
       promt_start_input
     when 9
-      system 'clear'
       Teacher.list_all(@people)
       promt_start_input
     when 10
@@ -106,36 +100,36 @@ class App
     puts 'To add a student, please enter 1'
     puts 'To add a teacher, please enter 2'
     user_input = gets.chomp.to_i
-    case user_input    
+    case user_input
     when 1 # add a student ------------------
-      system "clear"
       puts 'What is the name of the student?'
       name = gets.chomp.to_s
       puts 'What is the age of the student?'
       age = gets.chomp.to_i
       puts 'What is his classroom?'
-      # show classroom options    
+      # show classroom options
       classroom = UserInput.classroom(@classrooms)
       # call method to find out parent permission
       parent_permission = UserInput.parent_permission
-      
-      Student.new(classroom: classroom, name: name, age: age, parent_permission: parent_permission)
-      system "clear"
+      # instantiate a new student
+      @people.push(Student.new(classroom: classroom, name: name, age: age, parent_permission: parent_permission))
+      system 'clear'
       puts 'Student successfully added.'
     when 2 # add a teacher ------------------
-      system "clear"
       puts 'What is the name of the teacher?'
       name = gets.chomp.to_s
       puts 'What is the age of the teacher?'
       age = gets.chomp.to_i
       puts 'What is his specialization?'
       specialization = UserInput.specialization(@specializations)
-
-      Teacher.new(specialization: specialization, name: name, age: age)
+      # instantiate a new teacher
+      @people.push(Teacher.new(specialization: specialization, name: name, age: age))
+      system 'clear'
       puts 'Teacher successfully added.'
     else
-      system "clear"
-      puts 'Error! To add a person you MUST choose between a student or teacher. Please select one number from the list.'
+      system 'clear'
+      puts 'Error!'
+      puts 'To add a person you MUST choose between a student or teacher. Please select one number from the list.'
       sleep 1.5
       add_person
     end

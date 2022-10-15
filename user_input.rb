@@ -14,7 +14,7 @@ class UserInput
       sleep 0.75
       classroom
     end
-    return answer -1
+    answer - 1
   end
 
   def self.parent_permission
@@ -23,8 +23,8 @@ class UserInput
     puts 'No  - 2'
     answer = gets.chomp.to_i
     case answer
-    when 1 then return true
-    when 2 then return false
+    when 1 then true
+    when 2 then false
     else
       puts 'Error! To add a student you must provide a valid parent permission. Please select one number from the list.'
       sleep 0.75
@@ -43,10 +43,11 @@ class UserInput
       sleep 0.75
       specialization
     end
-    return answer
+    answer
   end
-  # -----------------------------  
-  #helper methods to add a rental
+
+  # -----------------------------
+  # helper methods to add a rental
   def self.rental_book(books)
     books.each_with_index do |e, index|
       puts "[#{index + 1}] - #{e.title} - by - #{e.author}"
@@ -58,13 +59,13 @@ class UserInput
       sleep 0.85
       rental_book(books)
     end
-    return books[answer -1]
+    books[answer - 1]
   end
 
   def self.person_rental(people)
-    puts "This is the list of available people:"
+    puts 'This is the list of available people:'
     people.each_with_index do |e, index|
-      puts "[#{index +1}] - #{e.name}"
+      puts "[#{index + 1}] - #{e.name}"
     end
     puts 'Select a number:'
     answer = gets.chomp.to_i
@@ -72,6 +73,6 @@ class UserInput
       puts 'Error! You must select a valid person. Please select one NUMBER from the list.'
       person_rental(people)
     end
-    return people[answer-1]
+    people[answer - 1]
   end
 end

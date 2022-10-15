@@ -3,11 +3,11 @@ class LoadData
   def self.load_data(books, people, classrooms, rentals)
     ## populate @books
     books_dummy_data = [
-      [ 'The Grass is Always Greener', 'Jeffrey Archer' ],
-      [ 'Murder!', 'Arnold Bennett' ],
-      [ 'A Boy at Seven', 'John Bidwell' ],
-      [ 'The Open Boat', 'Stephen Crane' ],
-      [ 'The Higgler', 'A. E. Coppard' ]
+      ['The Grass is Always Greener', 'Jeffrey Archer'],
+      ['Murder!', 'Arnold Bennett'],
+      ['A Boy at Seven', 'John Bidwell'],
+      ['The Open Boat', 'Stephen Crane'],
+      ['The Higgler', 'A. E. Coppard']
     ]
     books_dummy_data.each do |book|
       books.push(Book.new(book[0], book[1]))
@@ -27,7 +27,7 @@ class LoadData
     classrooms.each { |e| Classroom.new(e) }
 
     ## add dummy rentals
-    date = DateTime.now()
+    date = DateTime.now
     people.each do |person|
       books.each do |book|
         rentals.push(Rental.new(book, person, date))

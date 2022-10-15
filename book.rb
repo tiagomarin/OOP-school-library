@@ -21,14 +21,15 @@ class Book
     puts 'Who is the Author'
     author = gets.chomp.to_s
     books.push(Book.new(title, author))
-    puts "Book created successfully!"
+    puts 'Book created successfully!'
   end
 
   def self.list_all(books)
-    system "clear"
+    system 'clear'
     puts 'List of books:'
+    puts ''
     books.each do |book|
-       puts "#{book.title} by #{book.author}"
+      puts "#{book.title} by #{book.author}"
     end
   end
 end

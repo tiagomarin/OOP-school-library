@@ -30,9 +30,10 @@ class Person < Nameable
 
   # Methods triggered by user
   def self.list_all_people(people)
-    system "clear"
-    puts "All people: " 
-    people.each { |person| puts person.name}
+    system 'clear'
+    puts 'List of all people: '
+    puts ''
+    people.each { |person| puts person.name }
   end
 
   private

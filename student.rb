@@ -19,10 +19,11 @@ class Student < Person
 
   # Methods triggered by user
   def self.list_all(people)
-    system "clear"
-    puts "List of all students"
+    system 'clear'
+    puts 'List of all students'
+    puts ''
     people.each do |person|
-    puts person.name if person.is_a?(Student)
+      puts person.name if person.is_a?(Student)
     end
   end
 end

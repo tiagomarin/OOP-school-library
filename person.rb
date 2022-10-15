@@ -34,9 +34,6 @@ class Person < Nameable
     puts 'List of all people: '
     puts ''
     people.each { |person| puts person.name }
-
-  def correct_name
-    @name
   end
 
   private

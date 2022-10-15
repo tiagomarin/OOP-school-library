@@ -13,7 +13,7 @@ class Person < Nameable
     @rentals = []
     @name = name
     @age = age
-    @parent_permission = parent_permission
+    @parent_permission = !parent_permission.nil?
   end
 
   def add_rental(book)
@@ -34,6 +34,9 @@ class Person < Nameable
     puts 'List of all people: '
     puts ''
     people.each { |person| puts person.name }
+
+  def correct_name
+    @name
   end
 
   private
@@ -42,10 +45,3 @@ class Person < Nameable
     age >= 18
   end
 end
-
-# person = Person.new(22, 'maximilianus')
-# pp person.correct_name
-# capitalized_person = CapitalizeDecorator.new(person)
-# pp capitalized_person.correct_name
-# capitalized_trimmed_person = TrimmerDecorator.new(capitalized_person)
-# pp capitalized_trimmed_person.correct_name

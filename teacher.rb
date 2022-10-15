@@ -10,4 +10,12 @@ class Teacher < Person
   def can_use_services?
     true
   end
+
+  def self.list_all(people)
+    system "clear"
+    puts "List of all teachers"
+    people.each do |person|
+    puts person.name if person.is_a?(Teacher)
+    end
+  end
 end

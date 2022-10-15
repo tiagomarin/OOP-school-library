@@ -7,14 +7,13 @@ class Person < Nameable
   attr_accessor :name, :age
   attr_reader :id, :rentals
 
-  Person.new(name: 'tiago', age: 33, parent_permission: true)
-  def initialize(age:, name: 'Unknown', parent_permission: parent_permission)
+  def initialize(age:, name: 'Unknown', parent_permission: true)
     super()
     @id = SecureRandom.uuid
     @rentals = []
     @name = name
     @age = age
-    @parent_permission = !parent_permission.nil?
+    @parent_permission = parent_permission
   end
 
   def add_rental(book)
@@ -29,6 +28,15 @@ class Person < Nameable
     @name
   end
 
+  def self.list_all_people(people)
+    system "clear"
+    puts "All people: " 
+    people.each { |person| puts person.name}
+  end
+
+  def list_all_rentals(people)
+
+  end
   private
 
   def of_age?(age)

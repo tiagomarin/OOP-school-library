@@ -13,4 +13,11 @@ class Book
   def add_rental(person)
     Rental.new(self, person)
   end
+
+  def list_all(books)
+    system "clear"
+    puts 'List of books:'
+    books.each { |book| puts book.title}
+    sleep 2
+  end
 end

@@ -3,34 +3,21 @@ require_relative './book'
 require_relative './student'
 require_relative './teacher'
 require_relative './rental'
+require_relative './user_input'
+require_relative './load_data'
+# require_relative './'
+# require_relative './'
 
 class App
   def start
-    # add necessary dummy data
+    # add instance variables
+    @books = []
+    @rentals = []
+    @people = []
     @classrooms = %w[Alpha Beta Charlie]
-    @classrooms.each { |e| Classroom.new(e) }
-
     @specializations = %w[Ruby CSS JavaScript React]
-
-    books = []
-    books_dummy_data = [{ title: 'Book 1', author: 'Author1' }, { title: 'Book 2', author: 'Author2' },
-                        { book: 'Book 3', author: 'Author3' }]
-    books_dummy_data.each do |e|
-      e.map { |key, value| books.push(Book.new(key, value)) }
-    end
-
-    students = []
-    students_names = %w[John Ana Kevin]
-    students_names.each do |name|
-      students.push(Student.new(classroom: 'Alpha', age: 22, name: name, parent_permission: true))
-    end
-
-    teachers = []
-    teachers_names = %w[John Ana Kevin]
-    teachers_names.each do |name|
-      teachers.push(Teacher.new(age: 22, name: name, specialization: 'Ruby', parent_permission: true))
-    end
-
+    # add dummy data
+    LoadData.load_data(@books, @people, @classrooms)
     # start
     puts 'Welcome to the School Library'
     sleep 1.25
@@ -70,22 +57,22 @@ class App
       add_rental
       promt_start_input
     when 4
-      list_all_people
+      Person.list_all_people(@people)
       promt_start_input
     when 5
-      list_all_books
+      Book.list_all(@books)
       promt_start_input
     when 6
-      list_all_rentals
+      Rental.list_all(@rentals)
       promt_start_input
     when 7
       list_all_rentals_by_person_id
       promt_start_input
     when 8
-      list_all_students
+      Student.list_all(@people)
       promt_start_input
     when 9
-      list_all_teachers
+      Teacher.list_all(@people)
       promt_start_input
     when 10
       puts 'Exited the program.'
@@ -103,68 +90,29 @@ class App
     puts 'To add a student, please enter 1'
     puts 'To add a teacher, please enter 2'
     user_input = gets.chomp.to_i
-    case user_input
+    case user_input    
     when 1 # add a student ------------------
+      system "clear"
       puts 'What is the name of the student?'
       name = gets.chomp.to_s
       puts 'What is the age of the student?'
       age = gets.chomp.to_i
       puts 'What is his classroom?'
-      # show classroom options
-      def get_classroom
-        @classrooms.each_with_index do |e, index|
-          puts "Class '#{e}' enter - #{index + 1}"
-        end
-        @@user_answer = gets.chomp.to_i
-
-        if @@user_answer > @classrooms.length + 1 || @@user_answer == 0
-          puts 'Error! To add a student you must provide a valid Classroom. Please select one number from the list.'
-          sleep 0.75
-          get_classroom
-        end
-      end
-      get_classroom
-      classroom = @classrooms[@@user_answer - 1]
-      def get_parent_permission
-        puts 'Does the student have parent permission?'
-        puts 'Yes - 1'
-        puts 'No  - 2'
-        answer = gets.chomp.to_i
-        case answer
-        when 1
-          @parent_permission = true
-        when 2
-          @parent_permission = false
-        else
-          puts 'Error! To add a student you must provide a valid parent permission. Please select one number from the list.'
-          sleep 0.75
-          get_parent_permission
-        end
-      end
-      get_parent_permission
-      Student.new(classroom: classroom, name: name, age: age, parent_permission: @parent_permission)
+      # show classroom options    
+      classroom = UserInput.classroom(@classrooms)
+      # call method to find out parent permission
+      parent_permission = UserInput.parent_permission
+      
+      Student.new(classroom: classroom, name: name, age: age, parent_permission: parent_permission)
       puts 'Student successfully added.'
     when 2 # add a teacher ------------------
+      system "clear"
       puts 'What is the name of the teacher?'
       name = gets.chomp.to_s
       puts 'What is the age of the teacher?'
       age = gets.chomp.to_i
       puts 'What is his specialization?'
-      # show specialization options
-      def get_specialization
-        @specializations.each_with_index do |specialization, index|
-          puts "#{specialization} enter - #{index + 1}"
-        end
-        @user_answer = gets.chomp.to_i
-
-        if @user_answer > @specializations.length + 1 || @user_answer <= 0
-          puts 'Error! To add a teacher you MUST provide a valid Specialization. Please select one number from the list.'
-          sleep 0.75
-          get_specialization
-        end
-      end
-      get_specialization
-      specialization = @specializations[@user_answer - 1]
+      specialization = UserInput.specialization(@specializations)
 
       Teacher.new(specialization: specialization, name: name, age: age)
       puts 'Teacher successfully added.'
@@ -176,20 +124,45 @@ class App
   end
 
   def add_book
+    system "clear"
     puts 'What is the title of the book?'
     title = gets.chomp.to_s
-    puts 'To add a teacher, please enter 2'
+    puts 'Who is the Author'
+    author = gets.chomp.to_s
+    @books.push(Book.new(title, author))
+    puts "Book created successfully!"
   end
 
-  def add_rental; end
 
-  def list_all_people; end
 
-  def list_all_books; end
 
-  def list_all_rentals_by_person_id; end
+  def add_rental
+    system "clear"
+    puts 'What book is being rented?'
+    book = UserInput.rental_book(@books)
+    person = UserInput.person_rental(@people)
+    date = Date.now
+    @rentals.push(Rental.new(book, person, date))
+  end
 
-  def list_all_students; end
+  
 
-  def list_all_teachers; end
+  def list_all_rentals_by_person_id
+    system "clear"
+    puts 'Who is the person you want do check the rentals?'
+    answer = gets.chomp.to_s
+
+    if people.include?[name:answer]
+      person = people[name:answer]
+    else
+      puts "Person not found. Try again!"
+    end
+
+    person.rentals.each do |rental|
+       puts "#{rental.book.title} by #{rental.book.author} rented on: #{rental.date}"
+    end
+  end
+
+  
+  
 end

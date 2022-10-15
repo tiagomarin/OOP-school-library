@@ -15,11 +15,12 @@ Metrics/AbcSize:
   Max: 50
 Metrics/ClassLength:
   Max: 250
+Metrics/CyclomaticComplexity:
+  Max: 20
 Metrics/BlockLength:
   IgnoredMethods: ['describe']
-  Max: 50
-Metrics/CyclomaticComplexity:
-  Max: 20 
+  Max: 30
+
 
 Style/Documentation:
   Enabled: false

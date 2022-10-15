@@ -4,8 +4,8 @@ require_relative './capitalize_decorator'
 require_relative './trimmer_decorator'
 require_relative './rental'
 class Person < Nameable
-  attr_accessor :name, :age
-  attr_reader :id, :rentals
+  attr_accessor :name, :age, :rentals
+  attr_reader :id
 
   def initialize(age:, name: 'Unknown', parent_permission: true)
     super()
@@ -28,15 +28,13 @@ class Person < Nameable
     @name
   end
 
+  # Methods triggered by user
   def self.list_all_people(people)
     system "clear"
     puts "All people: " 
     people.each { |person| puts person.name}
   end
 
-  def list_all_rentals(people)
-
-  end
   private
 
   def of_age?(age)

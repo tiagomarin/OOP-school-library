@@ -5,6 +5,7 @@ require_relative './teacher'
 require_relative './rental'
 require_relative './user_input'
 require_relative './load_data'
+require 'date'
 # require_relative './'
 # require_relative './'
 
@@ -17,10 +18,11 @@ class App
     @classrooms = %w[Alpha Beta Charlie]
     @specializations = %w[Ruby CSS JavaScript React]
     # add dummy data
-    LoadData.load_data(@books, @people, @classrooms)
+    LoadData.load_data(@books, @people, @classrooms, @rentals)
     # start
+    puts ''
     puts 'Welcome to the School Library'
-    sleep 1.25
+    sleep 1.1
     promt_start_input
   end
 
@@ -39,7 +41,9 @@ class App
       '     [10] Exit',
       ''
     ]
+    puts ''
     puts '-------------------------------------------------'
+    puts ''
     puts 'What do you wanna do?'
     puts "\nEnter a number from the options below:"
     puts options
@@ -48,45 +52,57 @@ class App
 
     case choice
     when 1
+      system 'clear'
       add_person
       promt_start_input
     when 2
-      add_book
+      system 'clear'
+      Book.add_book(@books)
       promt_start_input
     when 3
-      add_rental
+      system 'clear'
+      Rental.add_rental(@books, @people, @rentals)
       promt_start_input
     when 4
+      system 'clear'
       Person.list_all_people(@people)
       promt_start_input
     when 5
+      system 'clear'
       Book.list_all(@books)
       promt_start_input
     when 6
+      system 'clear'
       Rental.list_all(@rentals)
       promt_start_input
     when 7
-      list_all_rentals_by_person_id
+      system 'clear'
+      Rental.list_all_rentals_by_person_id(@people)
       promt_start_input
     when 8
+      system 'clear'
       Student.list_all(@people)
       promt_start_input
     when 9
+      system 'clear'
       Teacher.list_all(@people)
       promt_start_input
     when 10
+      system 'clear'
       puts 'Exited the program.'
+      puts ''
       puts 'See you next time!'
+      sleep 2
     else
+      system 'clear'
       puts 'Error!'
-      puts 'Make sure you are typing exactly a number'
+      puts 'Make sure you are typing exactly a NUMBER from the list'
       sleep 0.75
       promt_start_input
     end
   end
 
   def add_person
-    system 'clear'
     puts 'To add a student, please enter 1'
     puts 'To add a teacher, please enter 2'
     user_input = gets.chomp.to_i
@@ -104,6 +120,7 @@ class App
       parent_permission = UserInput.parent_permission
       
       Student.new(classroom: classroom, name: name, age: age, parent_permission: parent_permission)
+      system "clear"
       puts 'Student successfully added.'
     when 2 # add a teacher ------------------
       system "clear"
@@ -117,52 +134,10 @@ class App
       Teacher.new(specialization: specialization, name: name, age: age)
       puts 'Teacher successfully added.'
     else
+      system "clear"
       puts 'Error! To add a person you MUST choose between a student or teacher. Please select one number from the list.'
-      sleep 0.75
+      sleep 1.5
       add_person
     end
   end
-
-  def add_book
-    system "clear"
-    puts 'What is the title of the book?'
-    title = gets.chomp.to_s
-    puts 'Who is the Author'
-    author = gets.chomp.to_s
-    @books.push(Book.new(title, author))
-    puts "Book created successfully!"
-  end
-
-
-
-
-  def add_rental
-    system "clear"
-    puts 'What book is being rented?'
-    book = UserInput.rental_book(@books)
-    person = UserInput.person_rental(@people)
-    date = Date.now
-    @rentals.push(Rental.new(book, person, date))
-  end
-
-  
-
-  def list_all_rentals_by_person_id
-    system "clear"
-    puts 'Who is the person you want do check the rentals?'
-    answer = gets.chomp.to_s
-
-    if people.include?[name:answer]
-      person = people[name:answer]
-    else
-      puts "Person not found. Try again!"
-    end
-
-    person.rentals.each do |rental|
-       puts "#{rental.book.title} by #{rental.book.author} rented on: #{rental.date}"
-    end
-  end
-
-  
-  
 end

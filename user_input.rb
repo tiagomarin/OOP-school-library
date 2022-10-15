@@ -9,7 +9,7 @@ class UserInput
     end
     answer = gets.chomp.to_i
 
-    if answer > classrooms.length + 1 || answer.zero?
+    if answer > classrooms.length || answer <= 0
       puts 'Error! To add a student you must provide a valid Classroom. Please select one number from the list.'
       sleep 0.75
       classroom
@@ -38,7 +38,7 @@ class UserInput
     end
     answer = gets.chomp.to_i
 
-    if answer > specializations.length + 1 || answer <= 0
+    if answer > specializations.length || answer <= 0
       puts 'Error! To add a teacher you MUST provide a valid Specialization. Please select one number from the list.'
       sleep 0.75
       specialization
@@ -49,14 +49,14 @@ class UserInput
   #helper methods to add a rental
   def self.rental_book(books)
     books.each_with_index do |e, index|
-      puts "Book '#{e.title}' by '#{e.author}' enter - #{index + 1}"
+      puts "[#{index + 1}] - #{e.title} - by - #{e.author}"
     end
     answer = gets.chomp.to_i
 
-    if answer > books.length + 1 || answer.zero?
+    if answer > books.length || answer <= 0
       puts 'Error! To add a rental you must select a book that it is in the inventory. Please select one number from the list.'
       sleep 0.85
-      rental_book
+      rental_book(books)
     end
     return books[answer -1]
   end
@@ -64,23 +64,14 @@ class UserInput
   def self.person_rental(people)
     puts "This is the list of available people:"
     people.each_with_index do |e, index|
-      puts "[#{index + 1}] - #{e.name}"
+      puts "[#{index +1}] - #{e.name}"
     end
     puts 'Select a number:'
     answer = gets.chomp.to_i
-    if answer > people.length + 1 || answer.zero?
-      puts 'Error! To add a rental you must select a valid person. Please select one NUMBER from the list.'
-      person_rental
+    if answer > people.length || answer <= 0
+      puts 'Error! You must select a valid person. Please select one NUMBER from the list.'
+      person_rental(people)
     end
     return people[answer-1]
   end
-  # def book_exist?(books, answer)
-  #   name = books[answer]
-  #   if !books.include?[name:answer]
-  #     puts "Book not found. Please try again"
-  #     App.add_rental
-  #     else
-  #       return books[name: answer]
-  #   end
-  # end
 end

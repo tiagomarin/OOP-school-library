@@ -11,6 +11,7 @@ class Teacher < Person
     true
   end
 
+  # Methods triggered by user
   def self.list_all(people)
     system "clear"
     puts "List of all teachers"

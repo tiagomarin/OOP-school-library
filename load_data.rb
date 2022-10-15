@@ -1,10 +1,13 @@
+require 'date'
 class LoadData
-  def self.load_data(books, people, classrooms)
+  def self.load_data(books, people, classrooms, rentals)
     ## populate @books
     books_dummy_data = [
-      [ 'Book 1', 'Author1' ],
-      [ 'Book 2', 'Author2' ],
-      [ 'Book 3', 'Author3' ]
+      [ 'The Grass is Always Greener', 'Jeffrey Archer' ],
+      [ 'Murder!', 'Arnold Bennett' ],
+      [ 'A Boy at Seven', 'John Bidwell' ],
+      [ 'The Open Boat', 'Stephen Crane' ],
+      [ 'The Higgler', 'A. E. Coppard' ]
     ]
     books_dummy_data.each do |book|
       books.push(Book.new(book[0], book[1]))
@@ -22,5 +25,13 @@ class LoadData
 
     ## intanciate classrooms
     classrooms.each { |e| Classroom.new(e) }
+
+    ## add dummy rentals
+    date = DateTime.now()
+    people.each do |person|
+      books.each do |book|
+        rentals.push(Rental.new(book, person, date))
+      end
+    end
   end
 end

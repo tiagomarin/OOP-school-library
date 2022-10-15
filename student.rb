@@ -17,6 +17,7 @@ class Student < Person
     classroom.students.push(self) unless classroom.students.include?(self)
   end
 
+  # Methods triggered by user
   def self.list_all(people)
     system "clear"
     puts "List of all students"

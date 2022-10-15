@@ -14,10 +14,21 @@ class Book
     Rental.new(self, person)
   end
 
-  def list_all(books)
+  # Methods triggered by user
+  def self.add_book(books)
+    puts 'What is the title of the book?'
+    title = gets.chomp.to_s
+    puts 'Who is the Author'
+    author = gets.chomp.to_s
+    books.push(Book.new(title, author))
+    puts "Book created successfully!"
+  end
+
+  def self.list_all(books)
     system "clear"
     puts 'List of books:'
-    books.each { |book| puts book.title}
-    sleep 2
+    books.each do |book|
+       puts "#{book.title} by #{book.author}"
+    end
   end
 end

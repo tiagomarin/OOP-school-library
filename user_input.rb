@@ -1,22 +1,23 @@
 require_relative './app'
 require_relative './person'
 
+def classroom(classrooms)
+  classrooms.each_with_index do |e, index|
+    puts "Class '#{e}' enter - #{index + 1}"
+  end
+  answer = gets.chomp.to_i
+
+  if answer > classrooms.length || answer <= 0
+    puts 'Error! To add a student you must provide a valid Classroom. Please select one number from the list.'
+    sleep 0.75
+    classroom(classrooms)
+  else
+    answer - 1
+  end
+end
 class UserInput
   # helper methods to add a person
-  def self.classroom(classrooms)
-    classrooms.each_with_index do |e, index|
-      puts "Class '#{e}' enter - #{index + 1}"
-    end
-    answer = gets.chomp.to_i
-
-    if answer > classrooms.length || answer <= 0
-      puts 'Error! To add a student you must provide a valid Classroom. Please select one number from the list.'
-      sleep 0.75
-      classroom(classrooms)
-    else
-      answer - 1
-    end
-  end
+  
 
   def self.parent_permission
     puts 'Does the student have parent permission?'

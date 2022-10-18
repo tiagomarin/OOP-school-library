@@ -23,10 +23,10 @@ class App
     puts ''
     puts 'Welcome to the School Library'
     sleep 1.1
-    promt_start_input
+    start_menu
   end
 
-  def promt_start_input
+  def start_menu
     options = [
       '',
       '     [1] Add a person',
@@ -56,31 +56,31 @@ class App
     case choice
     when 1
       add_person
-      promt_start_input
+      start_menu
     when 2
       Book.add_book(@books)
-      promt_start_input
+      start_menu
     when 3
       Rental.add_rental(@books, @people, @rentals)
-      promt_start_input
+      start_menu
     when 4
       Person.list_all_people(@people)
-      promt_start_input
+      start_menu
     when 5
       Book.list_all(@books)
-      promt_start_input
+      start_menu
     when 6
       Rental.list_all(@rentals)
-      promt_start_input
+      start_menu
     when 7
       Rental.list_all_rentals_by_person_id(@people)
-      promt_start_input
+      start_menu
     when 8
       Student.list_all(@people)
-      promt_start_input
+      start_menu
     when 9
       Teacher.list_all(@people)
-      promt_start_input
+      start_menu
     when 10
       system 'clear'
       puts 'Exited the program.'
@@ -92,7 +92,7 @@ class App
       puts 'Error!'
       puts 'Make sure you are typing exactly a NUMBER from the list'
       sleep 0.75
-      promt_start_input
+      start_menu
     end
   end
 
@@ -108,7 +108,7 @@ class App
       age = gets.chomp.to_i
       puts 'What is his classroom?'
       # show classroom options
-      classroom = UserInput.classroom(@classrooms)
+      classroom = classroom(@classrooms)
       # call method to find out parent permission
       parent_permission = UserInput.parent_permission
       # instantiate a new student
